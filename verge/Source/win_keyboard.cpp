@@ -39,7 +39,7 @@ LPDIRECTINPUTDEVICE di_joy;
 char keys[256];
 byte lastpressed;
 byte lastkey;
-std::string bindarray[256];
+VergeCallback bindarray[256];
 
 byte key_ascii_tbl[128] =
 {
@@ -206,8 +206,8 @@ int ParseKeyEvent()
 		key_timer = systemtime;
 	}
 
-	if (key_pressed && bindarray[lastpressed].length())
-		se->ExecuteFunctionString(bindarray[lastpressed]);
+	if (key_pressed && bindarray[lastpressed].functionIndex)
+		se->ExecuteCallback(bindarray[lastpressed], true);
 	if (key_pressed)
 		return 1;
 	return 0;

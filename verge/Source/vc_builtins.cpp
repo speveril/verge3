@@ -112,8 +112,8 @@ static VcFunctionDecl _libfuncs[NUM_LIBFUNCS] = {
 	{"5", "HookTimer", "8" },
 	{"5", "HookRetrace", "8" },
 	{"5", "HookEntityRender", "13" },
-	{"5", "HookKey", "13" },
-	{"5", "HookButton", "13" },
+	{"5", "HookKey", "18" },
+	{"5", "HookButton", "18" },
 	{"5", "BlitEntityFrame", "11111" },
 	{"5", "SetEntitiesPaused", "7" },
 	{"7", "GetObsPixel", "11" },
@@ -294,7 +294,8 @@ static VcFunctionDecl _libfuncs[NUM_LIBFUNCS] = {
 	{"7", "IntExists", "3"},		// Grue, (2008-12-26)
 	{"7", "StrExists", "3"},
 	{"5", "BlitObs", "1111" },
-	{"5", "HookMapLoad", "8" }   // kdf (2011-01-10)
+	{"5", "HookMapLoad", "8" },   // kdf (2011-01-10)
+	{"5", "ResizeLayer", "11111"}   // kdf (2011-06-12)
 };
 
 VcFunction *libfuncs;

@@ -120,7 +120,7 @@
 #define t_BOOL				7 // For better lua compatibility with builtins.
 #define t_CALLBACK			8 // For function pointers.
 
-#define NUM_LIBFUNCS		282
+#define NUM_LIBFUNCS		283
 #define NUM_HVARS			135
 #define NUM_HDEFS			111
 

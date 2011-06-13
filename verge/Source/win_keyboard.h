@@ -12,6 +12,8 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
+#include "g_script.h"
+
 void InitKeyboard();
 void UpdateKeyboard();
 
@@ -28,7 +30,7 @@ extern byte key_ascii_tbl[128];
 extern byte key_shift_tbl[128];
 extern byte lastkey;
 
-extern std::string bindarray[256];
+extern VergeCallback bindarray[256];
 
 #endif
 

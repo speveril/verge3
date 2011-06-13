@@ -137,11 +137,12 @@ public:
 	//VI.a. General Utility Functions
 	//TODO(CallFunction);
 	static void Exit(const std::string& message);
-	static void HookButton(int b, const std::string& s);
-	static void HookKey(int k, const std::string& s);
+	static void HookButton(int b, VergeCallback cb);
+	static void HookKey(int k, VergeCallback cb);
 	void HookTimer(VergeCallback s);
 	void HookRetrace(VergeCallback s);
 	void HookMapLoad(VergeCallback s);
+	void ResizeLayer(int l, int w, int h, int offx, int offy);
 	static void Log(const std::string& s);
 	static void MessageBox(const std::string& msg);
 	static int Random(int min, int max);

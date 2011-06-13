@@ -570,19 +570,23 @@ VC_LIBFUNC(vc_Map) ()
 	se->Map(map);
 }
 
+VC_LIBFUNC(vc_ResizeLayer) () {
+	int l = se->ResolveOperand(), w = se->ResolveOperand(), h = se->ResolveOperand();
+	int offx = se->ResolveOperand(), offy = se->ResolveOperand();
+	se->ResizeLayer(l,w,h,offx,offy);
+}
+
 VC_LIBFUNC(vc_HookTimer) () { se->HookTimer(se->ResolveCallback()); }
 VC_LIBFUNC(vc_HookRetrace) () { se->HookRetrace(se->ResolveCallback()); }
 VC_LIBFUNC(vc_HookMapLoad) () { se->HookMapLoad(se->ResolveCallback()); }
 
 VC_LIBFUNC(vc_HookKey) () { 
 	int k = se->ResolveOperand();
-	std::string s = se->ResolveString();
-	se->HookKey(k,s);
+	se->HookKey(k,se->ResolveCallback());
 }
 VC_LIBFUNC(vc_HookButton) () { 
 	int b = se->ResolveOperand();
-	std::string s = se->ResolveString();
-	se->HookButton(b,s);
+	se->HookButton(b,se->ResolveCallback());
 }
 
 VC_LIBFUNC(vc_HookEntityRender) ()

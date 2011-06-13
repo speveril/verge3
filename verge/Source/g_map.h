@@ -29,6 +29,7 @@ public:
 
     void SetParallaxX(double p);
     void SetParallaxY(double p);
+	void Resize(int width, int height, int offsetx = 0, int offsety = 0);
 
 	char layername[256];
 	int lucent;
@@ -90,6 +91,7 @@ public:
 
 	template<bool TRANSPARENT>
 	void BlitLayer(int l, int tx, int ty, int xwin, int ywin, image *dest);
+	void ResizeLayer(int l, int w, int h, int offx = 0, int offy = 0);
 	
 	void render(int x, int y, image *dest);
 	void BlitObs(int tx, int ty, int xwin, int ywin, image *dest);

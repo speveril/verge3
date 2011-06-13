@@ -100,6 +100,33 @@ void Layer::SetParallaxY(double p)
     parallax_y = p;
 }
 
+void Layer::Resize(int w, int h, int offx, int offy) {
+	int x, y;
+	int finx, finy;
+	word *newtiledata = new word[w*h];
+
+	// naive, dumb way of doing this
+	finx = w + offx;
+	if(width + offx < finx) finx = width + offx;
+	finy = h + offy;
+	if(height + offy < finy) finy = height + offy;
+
+	for(y = 0; y < h; y++) {
+		for(x = 0; x < w; x++) {
+			if(x - offx < 0 || y - offy < 0 || x - offx >= width || y - offy >= height) {
+				newtiledata[(y * w) + x] = 0;
+			} else {
+				newtiledata[(y * w) + x] = tiledata[((y - offy) * width) + (x - offx)];
+			}
+		}
+	}
+
+	delete[] this->tiledata;
+	this->tiledata = newtiledata;
+	this->width = w;
+	this->height = h;
+}
+
 MAP::MAP() {
 }
 
@@ -273,6 +300,7 @@ MAP::MAP(char *fname)
 		if (method == ENT_WANDERZONE) entity[idx]->SetWanderZone();
 		if (method == ENT_WANDERBOX) entity[idx]->SetWanderBox(x1, y1, x2, y2);*/
 	}
+
 	current_map = this;
 	se->LoadMapScript(f, mapfname);
 	vclose(f);
@@ -507,6 +535,37 @@ void MAP::BlitObs(int tx, int ty, int xwin, int ywin, image *dest)
 		}
 	SetLucent(0);
 }
+
+void MAP::ResizeLayer(int l, int w, int h, int offx, int offy) {
+	Layer &layer = *layers[l];
+	layer.Resize(w, h, 1, 1);
+	if(l == 0) {
+		int x, y;
+
+		mapwidth = w;
+		mapheight = h;
+		byte *newobslayer = new byte[mapwidth*mapheight];
+		word *newzonelayer = new word[mapwidth*mapheight];
+
+		for(y = 0; y < h; y++) {
+			for(x = 0; x < w; x++) {
+				if(x - offx < 0 || y - offy < 0 || x - offx >= mapwidth || y - offy >= mapheight) {
+					newobslayer[(y * w) + x] = 0;
+					newzonelayer[(y * w) + x] = 0;
+				} else {
+					newobslayer[(y * w) + x] = obslayer[((y - offy) * mapwidth) + (x - offx)];
+					newzonelayer[(y * w) + x] = zonelayer[((y - offy) * mapwidth) + (x - offx)];
+				}
+			}
+		}
+
+		delete[] obslayer;
+		delete[] zonelayer;
+		obslayer = newobslayer;
+		zonelayer = newzonelayer;
+	}
+}
+
 /*
 void MAP::render(int x, int y, image *dest)
 {

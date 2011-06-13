@@ -233,11 +233,15 @@ void ScriptEngine::WriteHvar_str(int category, int loc, int arg, const std::stri
 		{
 			case 65:
 				if(arg >= 0 && arg < entities)
-					entity[arg]->script = value; break;
+					entity[arg]->script = value;
 				break;
 			case 74: 
 				if(arg >= 0 && arg < sprites.size())
-					sprites[arg].thinkproc = value; break;
+					sprites[arg].thinkproc = value;
+				break;
+			case 89: // making zones.event writable (kdf, 2011-01-12)
+				if (current_map) 
+					strcpy(current_map->zones[arg]->script, value.c_str());
 				break;
 			case 100: //Entity.Chr
 				ScriptEngine::Set_EntityChr(arg,value);
@@ -654,14 +658,16 @@ void ScriptEngine::SetButtonJB(int b, int jb) {
 
 // Overkill (2007-08-25): HookButton is supposed to start at 1, not 0.
 // It's meant to be consistent with Unpress().
-void ScriptEngine::HookButton(int b, const std::string& s) {
+void ScriptEngine::HookButton(int b, VergeCallback cb) {
 	if (b<1 || b>4) return;
-	bindbutton[b-1] = s;
+	se->ReleaseCallback(bindbutton[b-1]);
+	bindbutton[b-1] = cb;
 }
 
-void ScriptEngine::HookKey(int k, const std::string& s) {
+void ScriptEngine::HookKey(int k, VergeCallback cb) {
 	if (k<0 || k>127) return;
-	bindarray[k] = s;
+	se->ReleaseCallback(bindarray[k]);
+	bindarray[k] = cb;
 }
 
 void ScriptEngine::HookTimer(VergeCallback cb) {
@@ -677,6 +683,10 @@ void ScriptEngine::HookRetrace(VergeCallback cb) {
 
 void ScriptEngine::HookMapLoad(VergeCallback cb) {
 	maploadfunc = cb;
+}
+
+void ScriptEngine::ResizeLayer(int l, int w, int h, int offx, int offy) {
+	current_map->ResizeLayer(l, w, h, offx, offy);
 }
 
 void ScriptEngine::Log(const std::string& s) { log(s.c_str()); }
