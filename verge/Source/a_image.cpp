@@ -167,6 +167,21 @@ image::image(int xres, int yres, int bpp)
 	alloc_data();
 }
 
+image::image(const image &img)
+:width(img.width)
+,height(img.height)
+,bpp(img.bpp)
+,pitch(img.pitch)
+,cx1(img.cx1),cy1(img.cy1)
+,cx2(img.cx2),cy2(img.cy2)
+,shell(img.shell)
+,alpha(img.alpha)
+,alphaChannel(img.alphaChannel)
+{
+	alloc_data();
+	memcpy(data, img.data, width*height*BytesPerPixel(bpp));
+}
+
 void image::delete_data() {
 	if(shell) return;
 

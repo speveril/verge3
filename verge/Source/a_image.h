@@ -22,7 +22,7 @@ public:
 	byte *alphaChannel;
 	int bpp;
 
-
+	image(const image &img);
 	image(int bpp=-1);
 	image(int xres, int yres, int bpp=-1);
 	void delete_data();

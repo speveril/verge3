@@ -43,6 +43,7 @@ public:
 	void AnimateTiles();
 	void ValidateAnimations();
 	void UpdateAnimations();
+	void SetVSPData(image *new_data);
 	
 	int GetObs(int t, int x, int y)
 	{

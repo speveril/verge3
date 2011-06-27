@@ -267,3 +267,24 @@ void VSP::ValidateAnimations()
 			err("VSP::ValidateAnimations() - animation %d references out of index tiles", i);
 }
 
+void VSP::SetVSPData(image *new_data) {
+	int i;
+
+	delete vspdata;
+	delete[] tileidx;
+	delete[] flipped;
+
+	vspdata = new image(*new_data);
+
+	numtiles = vspdata->height / 16;
+	tileidx = new int[numtiles];
+	flipped = new int[numtiles];
+
+	for (i=0; i<numtiles; i++)
+	{
+		flipped[i] = 0;
+		tileidx[i] = i;
+	}
+
+	SetHandleImage(2, vspdata);
+}

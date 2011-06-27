@@ -117,6 +117,7 @@ void ScriptEngine::WriteHvar(int category, int loc, int ofs, int value)
 				case 41: cameratracking = value; break;
 				case 51: transColor = value; break;
 				case 60: lastkey = value; break;
+				case 87: current_map->tileset->SetVSPData(ImageForHandle(value)); break;
 				case 96: cameratracker = value; break;
 				case 101: playerstep = value >= 1 ? value : 1; break;
 				case 102: playerdiagonals = value ? 1 : 0; break;
